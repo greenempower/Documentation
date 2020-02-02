@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+
+  <head>
+    <title>
+      Using libav* – FFmpeg
+    </title>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="/search" />
+        <link rel="help" href="/wiki/TracGuide" />
+        <link rel="alternate" href="/wiki/Using%20libav*?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/wiki" />
+        <link rel="stylesheet" href="/chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="/chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="/chrome/vote/css/tracvote.css" type="text/css" /><link rel="stylesheet" href="/chrome/tags/css/tractags.css" type="text/css" />
+        <link rel="shortcut icon" href="/chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="/chrome/common/trac.ico" type="image/x-icon" />
+    <style id="trac-noscript" type="text/css">.trac-noscript { display: none !important }</style>
+      <link type="application/opensearchdescription+xml" rel="search" href="/search/opensearch" title="Search FFmpeg" />
+      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/jquery.js"></script>
+      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/babel.js"></script>
+      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/trac.js"></script>
+      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/search.js"></script>
+      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/folding.js"></script>
+    <script type="text/javascript">
+      jQuery("#trac-noscript").remove();
+      jQuery(document).ready(function($) {
+        $(".trac-autofocus").focus();
+        $(".trac-target-new").attr("target", "_blank");
+        setTimeout(function() { $(".trac-scroll").scrollToTop() }, 1);
+        $(".trac-disable-on-submit").disableOnSubmit();
+      });
+    </script>
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="https://ffmpeg.org"><img src="/ffmpeg-logo.png" alt="FFmpeg" /></a>
+      </div>
+      <form id="search" action="/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="/login">Login</a></li><li><a href="/prefs">Preferences</a></li><li><a href="/wiki/TracGuide">Help/Guide</a></li><li><a href="/about">About Trac</a></li><li class="last"><a href="/register">Register</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="/wiki">Wiki</a></li><li><a href="/timeline">Timeline</a></li><li><a href="/report">View Tickets</a></li><li><a href="/search">Search</a></li><li class="last"><a href="/tags">Tags</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <h1 style="display: inline;"><a class="pathentry first" title="View WikiStart" href="/wiki">wiki:</a></h1><h1 style="display: inline; color: #b00;"><a class="pathentry" href="/wiki/Using%20libav*" title="View Using libav*">Using libav*</a></h1>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+        <ul>
+          <li class="first"><span id="vote" title="Vote count"><img src="/chrome/vote/aupgray.png" alt="Up-vote" /><span id="votes">+0</span><img src="/chrome/vote/adowngray.png" alt="Down-vote" /></span></li><li><a href="/wiki/WikiStart">Start Page</a></li><li><a href="/wiki/TitleIndex">Index</a></li><li class="last"><a href="/wiki/Using%20libav*?action=history">History</a></li>
+        </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          <div id="wikipage" class="trac-content"><p>
+First some disambiguiation: there is a fork of FFmpeg called <a class="ext-link" href="https://www.libav.org/"><span class="icon">​</span>Libav</a>.  There is also a library system that underlies FFmpeg itself, called <tt>libav</tt>.  This page is about the library <tt>libav</tt>, which is a part of FFmpeg.
+</p>
+<p>
+FFmpeg itself is composed of several libraries that can be used individually, and outside of FFmpeg, for instance in integrating parts of FFmpeg into your own program.  These are:
+</p>
+<ul><li><tt>libavutil</tt> contains various routines used to simplify programming, including random number generators, data structures, mathematics routines, core multimedia utilities, and much more.
+</li><li><tt>libavcodec</tt> provides a decoding and encoding API, and all the supported codecs.
+</li><li><tt>libavformat</tt> provides a demuxing and muxing API, and all the supported muxers and de-muxers.
+</li><li><tt>libavdevice</tt> provides an interface for grabbing from input devices (e.g. webcames or line-in audio) and rendering to output devices, and all the supported input and output devices
+</li><li><tt>libswscale</tt> provides a scaling and (raw pixel) format conversions API, with high speed/assembly optimized versions of several scaling routines.
+</li><li><tt>libavfilter</tt> provides an audio and video filtering API, and all the supported filters.
+</li><li><tt>libpostproc</tt> provides video postprocessing routines
+</li><li><tt>libswresample</tt> provides an audio resampling, rematrixing and sample format conversion API, and many high-quality optimized routines.
+</li></ul><p>
+These can be useful for instance if you don't have access to a command line to run <tt> ffmpeg</tt> as an executable, or if you want to use just a small "part" of FFmpeg inside your own program, or if you want access to raw video frames in your program, etc.  Also note that if you just need access to raw video frames, you could also write an audio or video <a class="wiki" href="/wiki/FilteringGuide">filter</a> and compile it along with FFmpeg and distribute that.  Another way to access raw video frames is to have ffmpeg output to "stdout", like <tt>ffmpeg -i ... -</tt>. Also note that if you just need to convert/transcode videos within your own application, you could make a system call out to the FFmpeg executable to do the heavy lifting for you.  You can parse the output for stdout for status information, or use the <tt>-progress</tt> option to make the output even more parseable.
+</p>
+<h1 id="GettingStarted">Getting Started</h1>
+<p>
+Here is the <a class="ext-link" href="https://www.ffmpeg.org/documentation.html"><span class="icon">​</span>official documentation</a> for using these libraries (the "Libraries Documentation" section).
+</p>
+<p>
+Also check <a class="ext-link" href="https://github.com/FFmpeg/FFmpeg/tree/master/doc/examples"><span class="icon">​</span>doc/examples</a>; the doxygen documentation is fairly complete and should work as reference (example: the <a class="ext-link" href="http://ffmpeg.org/doxygen/trunk/files.html"><span class="icon">​</span>example codes as doxygen</a>).
+</p>
+<p>
+In general, you must:
+</p>
+<ul><li>have the appropriate library compiled/available on your machine (for instance, if using packages, something like <tt>libswscale-dev</tt> must be installed, or <tt>configure</tt>, build, and install FFmpeg yourself using the <tt>--enable-shared</tt> configure option)
+</li><li>include the appropriate header file in your C code
+</li><li>link against that library's linker file, like <tt>gcc input.c -lswscale</tt> or the like during the linker phase
+</li></ul><h1 id="Community-contributedTutorials">Community-contributed Tutorials</h1>
+<p>
+There are a few tutorials on the web, however, some of them are outdated. The doc/examples files provided by FFmpeg usually use the latest ABI (i.e., they are the best reference on which <tt>libav</tt> calls to make) and are therefore more trustworthy.
+</p>
+<ul><li><a class="ext-link" href="http://dranger.com/ffmpeg/"><span class="icon">​</span>An FFmpeg and SDL Tutorial by Stephen Dranger</a>: explains how to write a video player based on FFmpeg
+</li><li><a class="ext-link" href="https://github.com/leandromoreira/ffmpeg-libav-tutorial#ffmpeg-command-line-tool-101"><span class="icon">​</span>Learn FFmpeg libav the Hard Way by Leandro Moreira</a>: a work in progress tutorial on using <tt>libav</tt>.
+</li><li><a class="ext-link" href="https://wiki.multimedia.cx/index.php?title=Category:FFmpeg_Tutorials"><span class="icon">​</span>MultimediaWiki list of FFmpeg tutorials</a>
+</li></ul><h1 id="Hints">Hints</h1>
+<h2 id="libavformat">libavformat</h2>
+<p>
+Check its <a class="ext-link" href="http://ffmpeg.org/doxygen/trunk/group__libavf.html"><span class="icon">​</span>Doxygen documentation</a>.  See most of the tutorials, as well.
+</p>
+<h2 id="libavcodec">libavcodec</h2>
+<p>
+Check its <a class="ext-link" href="http://ffmpeg.org/doxygen/trunk/group__libavc.html"><span class="icon">​</span>Doxygen documentation</a>.  See most of the tutorials, as well.
+</p>
+<p>
+Determining the right values to pass to AVCodecContext:
+</p>
+<p>
+One user <a class="ext-link" href="https://lists.ffmpeg.org/pipermail/ffmpeg-user/2012-June/007410.html"><span class="icon">​</span>shared</a> this advice for determining all the correct values:
+</p>
+<blockquote>
+<p>
+[An] approach to figuring this out is:
+</p>
+</blockquote>
+<ol><li>come up with the ffmpeg app command line which does what you want
+</li></ol><ol start="2"><li>use the <tt>gdb</tt> debugger to execute the <tt>ffmpeg_g</tt> app, put a breakpoint on <tt>avcodec_encode_audio2()</tt> (or whichever method you need), and see what values the ffmpeg app uses for AVPacket and for the (audio or otherwise) related fields in <tt>AVCodecContext</tt>.
+</li></ol><h2 id="libswresample">libswresample</h2>
+<p>
+<a class="ext-link" href="https://github.com/FFmpeg/FFmpeg/blob/master/doc/swresample.txt"><span class="icon">​</span>This file</a> is also given as documentation.
+</p>
+<h2 id="libswscale">libswscale</h2>
+<p>
+<a class="ext-link" href="https://github.com/FFmpeg/FFmpeg/blob/master/doc/swscale.txt"><span class="icon">​</span>This file</a> is also given as documentation.
+</p>
+<h2 id="libavdevice">libavdevice</h2>
+<p>
+Check its <a class="ext-link" href="http://ffmpeg.org/doxygen/trunk/group__lavd.html"><span class="icon">​</span>doxygen documentation</a>.
+</p>
+<p>
+Here is <a class="ext-link" href="http://ffmpeg.zeranoe.com/forum/viewtopic.php?f=15&amp;t=274"><span class="icon">​</span>an example</a> on Opening dshow with <tt>avformat_open_input</tt>.
+</p>
+<h2 id="libavfilter">libavfilter</h2>
+<p>
+See <a class="ext-link" href="http://wiki.multimedia.cx/index.php?title=Libavfilter"><span class="icon">​</span>the MultimediaWiki entry on libavfilter</a> and also the examples, and already existing filters. We have more doxy, some examples and a libavfilter-design document in the documentation.
+</p>
+<h1 id="Contact">Contact</h1>
+<p>
+If you have problems, one place to get help is to ask the <a class="ext-link" href="https://lists.ffmpeg.org/mailman/listinfo/libav-user/"><span class="icon">​</span>libav-user</a> mailing list, its description: "This list is about using libavcodec, libavformat, libavutil, libavdevice and libavfilter."  IRC might work also.
+</p>
+</div>
+          
+          <div class="trac-modifiedby">
+            <span><a href="/wiki/Using%20libav*?action=diff&amp;version=23" title="Version 23 by slhck: formatting, add new tutorial, remove outdated tutorial">Last modified</a> <a class="timeline" href="/timeline?from=2017-11-10T10%3A08%3A54%2B02%3A00&amp;precision=second" title="See timeline at Nov 10, 2017, 10:08:54 AM">2 years ago</a></span>
+            <span class="trac-print">Last modified on Nov 10, 2017, 10:08:54 AM</span>
+          </div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="/wiki/Using%20libav*?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="/chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="/about"><strong>Trac 1.0.9</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>
